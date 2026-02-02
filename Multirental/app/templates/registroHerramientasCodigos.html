@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block title %} Asignar Códigos a Herramientas {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Registrar Códigos</h2>
+    <form method="POST" action="{{ url_for('main_bp.registroHerramientas') }}">
+        <input type="hidden" name="nombre" value="{{ nombre }}" />
+        <input type="hidden" name="marca" value="{{ marca }}" />
+        <div class="mb-3">
+            <label for="codigos" class="form-label">Códigos de Herramientas</label>
+            {% for i in range(cantidad) %}
+                <input
+                    type="text"
+                    name="codigos"
+                    maxlength="4"
+                    pattern="^\d+$"
+                    class="form-control mb-2"
+                    placeholder=""
+                    required
+                    title="Solo se permiten números de hasta 4 dígitos"
+                />
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-success">Registrar Herramientas</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}Ver Transacciones{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Transacciones</h2>
+
+    {% if transacciones %}
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Herramienta</th>
+                <th>Cantidad</th>
+                <th>Sucursal Origen</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaccion in transacciones %}
+            <tr>
+                <td>{{ transaccion.id_transaccion }}</td>
+                <td>{{ transaccion.herramienta.nombre }}</td>
+                <td>{{ transaccion.cantidad }}</td>
+                <td>
+                    {% if transaccion.sucursal_origen %}
+                    {{ transaccion.sucursal_origen }}
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </td>
+                <td>{{ transaccion.estado }}</td>
+                <td>{{ transaccion.fecha.astimezone(tz).strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No se encontraron transacciones registradas.</p>
+    {% endif %}
+</div>
+{% endblock %}

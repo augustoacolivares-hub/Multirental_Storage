@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block title %} Crear Usuario {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Crear Usuario</h2>
+
+    <form method="POST">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="nombre" 
+                    name="nombre" 
+                    placeholder="Nombre completo" 
+                    maxlength="50" 
+                    required>
+            </div>
+            <div class="col-md-6">
+                <label for="correo" class="form-label">Correo</label>
+                <input 
+                    type="email" 
+                    class="form-control" 
+                    id="email" 
+                    name="email" 
+                    placeholder="Correo electrónico" 
+                    maxlength="100" 
+                    required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="password" class="form-label">Contraseña</label>
+                <input 
+                    type="password" 
+                    class="form-control" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Contraseña" 
+                    maxlength="30" 
+                    required>
+            </div>
+            <div class="col-md-6">
+                <label for="rol" class="form-label">Rol</label>
+                <select class="form-select" id="rol" name="rol" required>
+                    <option value="Usuario">Usuario</option>
+                    <option value="Administrador">Administrador</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-danger w-100">Crear Usuario</button>
+    </form>
+</div>
+{% endblock %}

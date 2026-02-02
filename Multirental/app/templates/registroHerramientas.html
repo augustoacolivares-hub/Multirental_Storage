@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block title %} Registro de Herramientas {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Registro de Herramientas</h2>
+    <form method="POST" action="{{ url_for('main_bp.registroHerramientas') }}">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                id="nombre" 
+                name="nombre" 
+                placeholder="Nombre de la herramienta" 
+                maxlength="50" 
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="marca" class="form-label">Marca</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                id="marca" 
+                name="marca" 
+                placeholder="Marca de la herramienta" 
+                maxlength="50" 
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="cantidad" class="form-label">Cantidad a registrar</label>
+            <input
+                type="number"
+                id="cantidad"
+                name="cantidad"
+                class="form-control"
+                placeholder=""
+                min="1"
+                max="15"
+                required
+            />
+        </div>
+        <button type="submit" class="btn btn-primary">Siguiente</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const nombreInput = document.getElementById("nombre");
+        const marcaInput = document.getElementById("marca");
+
+        // Convertir el texto a mayúsculas mientras se escribe
+        nombreInput.addEventListener("input", function() {
+            this.value = this.value.toUpperCase();
+        });
+
+        marcaInput.addEventListener("input", function() {
+            this.value = this.value.toUpperCase();
+        });
+    });
+</script>
+{% endblock %}
+

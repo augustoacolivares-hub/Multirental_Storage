@@ -1,0 +1,12 @@
+<!-- templates/404.html -->
+{% extends 'layout.html' %}
+
+{% block title %} Error 404 - Página no encontrada {% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h1>Error 404</h1>
+    <p>La página que estás buscando no se encuentra disponible.</p>
+    <a href="{{ url_for('main_bp.home') }}" class="btn btn-primary mt-4">Volver al inicio</a>
+</div>
+{% endblock %}

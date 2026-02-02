@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MultiRental Storage{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #F0F0F0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Asegura altura mínima del viewport */
+        }
+
+        .main-layout {
+            display: flex;
+            flex-grow: 1; /* Asegura que el contenido principal tome todo el espacio vertical disponible */
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: #0057b8; /* Azul claro */
+            color: #ffffff;
+            width: 220px; /* Ancho fijo */
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-height: 100vh; /* Altura completa del viewport */
+            position: relative; /* Permite extender dinámicamente */
+        }
+
+        .sidebar .nav-link {
+            color: #ffffff;
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: #003366; /* Azul oscuro */
+            color: #ffffff;
+        }
+
+        /* Contenido principal */
+        .content {
+            flex-grow: 1; /* Toma todo el espacio disponible */
+            padding: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #003366; /* Azul oscuro */
+            color: #ffffff; /* Texto blanco */
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            position: relative;
+            margin-top: auto; /* Empuja el footer al final del contenido */
+        }
+
+        /* Tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        /* Scroll dinámico */
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-layout {
+            flex-grow: 1;
+            display: flex;
+        }
+
+                /* Header general */
+        .navbar {
+            background-color: #003366; /* Azul Sodimac */
+            color: white;
+            padding: 10px 15px;
+        }
+
+        .navbar .user-name {
+            color: #FFD700; /* Amarillo para el nombre del usuario */
+            font-weight: bold;
+        }
+
+        .navbar .nav-link {
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-link:hover {
+            color: #FFD700; /* Amarillo al pasar el mouse */
+        }
+
+    </style>
+    
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <div class="sidebar-header" style="display: flex; align-items: center; gap: 10px; padding: 10px;">
+                <span style="font-size: 24px; color: white;">MultiRental Storage</span>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto">
+                    {% if session['nombre_usuario'] %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle user-name" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <span style="color: #FFD700;">{{ session['nombre_usuario'] }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li>
+                                <form action="{{ url_for('main_bp.logout') }}" method="POST" style="margin: 0; padding: 0;">
+                                    <button type="submit" class="dropdown-item">Cerrar sesión</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <span class="navbar-text">Invitado</span>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main_bp.home' %}active{% endif %}" href="{{ url_for('main_bp.home') }}">
+                            <i class="fas fa-tools"></i> Herramientas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main_bp.reportes' %}active{% endif %}" href="{{ url_for('main_bp.reportes') }}">
+                            <i class="fas fa-chart-bar"></i> Reportes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main_bp.registroHerramientas' %}active{% endif %}" href="{{ url_for('main_bp.registroHerramientas') }}">
+                            <i class="fas fa-plus-circle"></i> Registro Herramienta
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main_bp.buscar_herramienta') }}">
+                            <i class="fas fa-search"></i> Buscar Herramienta
+                        </a>
+                    </li>    
+                    {% if session['usuario_id'] %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main_bp.listar_sucursales' %}active{% endif %}" href="{{ url_for('main_bp.listar_sucursales') }}">
+                            <i class="fas fa-store"></i> Listar Sucursales
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% if session['rol'] == 'Administrador' %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main_bp.crear_usuario' %}active{% endif %}" href="{{ url_for('main_bp.crear_usuario') }}">
+                            <i class="fas fa-user-plus"></i> Crear Usuario
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main_bp.listar_usuarios' %}active{% endif %}" href="{{ url_for('main_bp.listar_usuarios') }}">
+                            <i class="fas fa-users"></i> Listar Usuarios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main_bp.eliminar_usuario' %}active{% endif %}"
+                            href="{{ url_for('main_bp.listar_para_eliminar_usuarios') }}">
+                            <i class="fas fa-user-minus"></i> Eliminar Usuario
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main_bp.crear_sucursal' %}active{% endif %}" href="{{ url_for('main_bp.crear_sucursal') }}">
+                            <i class="fas fa-plus-square"></i> Crear Sucursal
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main_bp.eliminar_herramienta' %}active{% endif %}" href="{{ url_for('main_bp.listar_herramientas_para_eliminar') }}">
+                            <i class="fas fa-trash-alt"></i> Eliminar Herramienta
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <!-- Content -->
+            <div class="col-md-9 col-lg-10 content">
+                <div class="container mt-4">
+                    {% if request.endpoint == 'main_bp.home' %}
+                    <div class="card shadow-sm alert alert-info alert-dismissible fade show" role="alert">
+                        <div class="card-body">
+                            <h2 class="card-title">Bienvenido a MultiRental Storage</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="card mt-4 shadow-sm">
+                        <div class="card-body">
+                            <!-- Mostrar mensajes flash -->
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            <div class="flash-message">
+                                {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            {% endwith %}
+
+                            {% block content %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 MultiRental Storage. Todos los derechos reservados.</p>
+    </footer>
+    
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Ocultar automáticamente los mensajes flash después de 5 segundos
+            setTimeout(() => {
+                const flashMessages = document.querySelectorAll('.flash-message .alert');
+                flashMessages.forEach((message) => {
+                    const fadeEffect = setInterval(() => {
+                        if (!message.style.opacity) {
+                            message.style.opacity = 1;
+                        }
+                        if (message.style.opacity > 0) {
+                            message.style.opacity -= 0.1;
+                        } else {
+                            clearInterval(fadeEffect);
+                            message.remove();
+                        }
+                    }, 50);
+                });
+            }, 5000);
+    
+            // Manejar el mensaje de bienvenida (welcome message)
+            const welcomeMessage = document.getElementById("welcome-message");
+            if (localStorage.getItem("welcomeClosed") === "true" && welcomeMessage) {
+                welcomeMessage.remove(); // Elimina el mensaje si ya fue cerrado
+            }
+    
+            const closeButton = document.querySelector("#welcome-message .btn-close");
+            if (closeButton) {
+                closeButton.addEventListener("click", function () {
+                    localStorage.setItem("welcomeClosed", "true"); // Guardar en localStorage que fue cerrado
+                    welcomeMessage.remove(); // Remover el mensaje inmediatamente
+                });
+            }
+        });
+    </script>
+    
+
+    
+</body>
+
+</html>

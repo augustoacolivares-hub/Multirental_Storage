@@ -1,0 +1,69 @@
+/* Estilos para el sidebar (barra lateral fija) */
+.sidebar {
+    height: 100vh;
+    position: fixed;
+    top: 60px;
+    /* Ajuste para que quede debajo del navbar */
+    padding-top: 20px;
+    background-color: #0a71b9;
+}
+
+.sidebar .nav-link {
+    padding: 15px 20px;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
+}
+
+.sidebar .nav-link.active {
+    background-color: #e7e7e7;
+    font-weight: bold;
+}
+
+/* Estilos para el navbar */
+.navbar {
+    z-index: 1000;
+    background-color: #ffffff;
+}
+
+/* Barra de búsqueda fija */
+.search-bar {
+    position: sticky;
+    top: 60px;
+    /* Justo debajo del navbar */
+    z-index: 900;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Contenedor desplazable de herramientas */
+.main-content {
+    position: relative;
+    padding-top: 60px;
+    overflow: hidden;
+}
+
+.tools-container {
+    height: calc(100vh - 200px);
+    /* Altura ajustada para el contenedor con scroll */
+    overflow-y: auto;
+    padding-right: 15px;
+    margin-top: 20px;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.machine-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Estilos adicionales */
+body {
+    margin: 0;
+    padding: 0;
+}

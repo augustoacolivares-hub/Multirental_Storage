@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Buscar Herramienta Disponible en Todas las Sucursales</h2>
+
+    <!-- Barra de búsqueda -->
+    <form method="GET" action="{{ url_for('main_bp.buscar_herramienta') }}">
+        <div class="input-group mb-3">
+            <input 
+                type="text" 
+                class="form-control text-uppercase" 
+                placeholder="Buscar por nombre o marca" 
+                name="search" 
+                value="{{ search_query }}"
+                maxlength="50">
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search"></i> Buscar
+            </button>
+        </div>
+    </form>
+
+    <!-- Tabla de resultados -->
+    {% if herramientas and herramientas.total > 0 %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Marca</th>
+                    <th>Sucursal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for herramienta, herramienta_sucursal, sucursal in herramientas.items %}
+                <tr>
+                    <td>{{ herramienta.nombre }}</td>
+                    <td>{{ herramienta.marca }}</td>
+                    <td>{{ sucursal.nombre_sucursal }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% elif herramientas is not none %}
+    <div class="alert alert-warning">No se encontraron herramientas disponibles.</div>
+    {% endif %}
+</div>
+{% endblock %}
+

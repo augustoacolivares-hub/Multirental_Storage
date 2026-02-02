@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Modificar Ubicación</h2>
+    <form method="POST" action="{{ url_for('main_bp.modificar_ubicacion', sucursal_id=sucursal.id_sucursal) }}">
+        <div class="mb-3">
+            <label for="ubicacion" class="form-label">Ubicación</label>
+            <input
+                type="text"
+                id="ubicacion"
+                name="ubicacion"
+                class="form-control"
+                value="{{ sucursal.ubicacion }}"
+                required
+            >
+        </div>
+        <button type="submit" class="btn btn-success">Guardar Cambios</button>
+        <a href="{{ url_for('main_bp.listar_sucursales') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

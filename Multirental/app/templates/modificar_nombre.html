@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Modificar Nombre de Sucursal</h2>
+    <form method="POST">
+        <div class="form-group">
+            <label for="nombre_sucursal">Nuevo Nombre de Sucursal</label>
+            <input type="text" id="nombre_sucursal" name="nombre_sucursal" class="form-control" value="{{ sucursal.nombre_sucursal }}" required>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Guardar Cambios</button>
+        <a href="{{ url_for('main_bp.listar_sucursales') }}" class="btn btn-secondary mt-3">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

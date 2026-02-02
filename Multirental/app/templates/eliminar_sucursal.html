@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}Eliminar Sucursal{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between mb-4">
+    <h2>Eliminar Sucursal</h2>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        {% if sucursales %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Ubicación</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sucursal in sucursales %}
+                <tr>
+                    <td>{{ sucursal.nombre_sucursal }}</td>
+                    <td>{{ sucursal.ubicacion }}</td>
+                    <td>
+                        <form method="POST"
+                            action="{{ url_for('main_bp.eliminar_sucursal', id_sucursal=sucursal.id_sucursal) }}">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No hay sucursales registradas.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

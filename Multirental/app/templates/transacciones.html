@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %}Transacciones{% endblock %}
+
+{% block content %}
+<h2>Transacciones para: {{ herramienta.nombre }} {{ herramienta.marca }} {{ herramienta_sucursal.codigo }}</h2>
+
+<form method="POST" action="{{ url_for('main_bp.transaccion', herramienta_codigo=herramienta_sucursal.codigo) }}">
+    <label for="estado">Estado</label>
+    <select name="estado" class="form-control">
+        {% for estado in estados_disponibles %}
+            <option value="{{ estado }}">{{ estado }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+</form>
+
+
+<h3>Stock total por sucursal:</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sucursal</th>
+            <th>Stock Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sucursal in stock_total_por_sucursal %}
+        <tr>
+            <td>{{ sucursal.nombre_sucursal }}</td>
+            <td>{{ sucursal.stock_total }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+{% endblock %}
